@@ -35,6 +35,7 @@ import org.csstudio.opibuilder.OPIBuilderPlugin;
 import org.csstudio.opibuilder.editparts.FixedPositionAnchor.AnchorPosition;
 import org.csstudio.opibuilder.editpolicies.WidgetComponentEditPolicy;
 import org.csstudio.opibuilder.editpolicies.WidgetNodeEditPolicy;
+import org.csstudio.opibuilder.model.AbstractPVWidgetModel;
 import org.csstudio.opibuilder.model.AbstractWidgetModel;
 import org.csstudio.opibuilder.model.ConnectionModel;
 import org.csstudio.opibuilder.properties.AbstractWidgetProperty;
@@ -80,6 +81,10 @@ import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.requests.DropRequest;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionFilter;
 import org.eclipse.ui.progress.UIJob;
 
@@ -475,9 +480,25 @@ public abstract class AbstractBaseEditPart extends AbstractGraphicalEditPart imp
 	 */
 	protected void hookMouseClickAction() {
 		final List<AbstractWidgetAction> actions = getHookedActions();
+		
+		figure.addMouseListener(new MouseListener.Stub() {	
+			@Override
+			public void mousePressed(MouseEvent me) {
+				if(me.button != 2) return;
+				if(getModel() instanceof AbstractPVWidgetModel) {
+					String pvName = ((AbstractPVWidgetModel)getModel()).getPVName();
+					Display display = Display.getCurrent();
+					Clipboard clipboard = new Clipboard(display);
+					clipboard.setContents(new Object[] {pvName}, new Transfer[] {TextTransfer.getInstance()});
+					clipboard.dispose();
+				}
+			}
+		});
+		
 		if (getWidgetModel().isEnabled() && actions != null) {
 			figure.setCursor(Cursors.HAND);
 			figure.addMouseListener(new MouseListener.Stub() {
+				
 
 				@Override
 				public void mousePressed(MouseEvent me) {
