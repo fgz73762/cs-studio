@@ -11,7 +11,7 @@
             category="org.csstudio"
             class="org.csstudio.logbook.dls.views.LogbookView"
             id="org.csstudio.logbook.dls.views"
-            name="Create ELog Entry"
+            name="Create DLS ELog Entry"
             restorable="true">
       </view>
    </extension>   
