@@ -62,6 +62,7 @@ public class OPIView extends ViewPart implements IOPIRuntime {
 	public void init(IViewSite site, IMemento memento) throws PartInitException {
 		super.init(site, memento);
 		this.site = site;
+		
 		//site.getPage().addPartListener(partListener);
 		if (memento != null) {
 			IMemento inputMem = memento.getChild(TAG_INPUT);
@@ -107,7 +108,8 @@ public class OPIView extends ViewPart implements IOPIRuntime {
 		}
 			
 		opiRuntimeDelegate.createGUI(parent);
-		createToolbarButtons();
+		// The zoom buttons are not particularly useful, and can mess up small displays.
+		//createToolbarButtons();
 		parent.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
