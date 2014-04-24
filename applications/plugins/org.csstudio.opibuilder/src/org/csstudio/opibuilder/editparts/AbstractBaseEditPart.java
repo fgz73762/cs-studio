@@ -82,6 +82,7 @@ import org.eclipse.gef.requests.DropRequest;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
@@ -489,7 +490,9 @@ public abstract class AbstractBaseEditPart extends AbstractGraphicalEditPart imp
 					String pvName = ((AbstractPVWidgetModel)getModel()).getPVName();
 					Display display = Display.getCurrent();
 					Clipboard clipboard = new Clipboard(display);
-					clipboard.setContents(new Object[] {pvName}, new Transfer[] {TextTransfer.getInstance()});
+					clipboard.setContents(new Object[] {pvName}, 
+							new Transfer[] {TextTransfer.getInstance()},
+							DND.SELECTION_CLIPBOARD);
 					clipboard.dispose();
 				}
 			}
