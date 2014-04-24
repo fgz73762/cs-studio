@@ -25,6 +25,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorReference;
@@ -51,7 +52,6 @@ public class RunModeService {
 	}
 
 	private IWorkbenchWindow runWorkbenchWindow;
-
 
 	private static RunModeService instance;
 
@@ -246,11 +246,45 @@ public class RunModeService {
 			}
 		});
 	}
+
+	public void runEdmOpi(final IPath path, final MacrosInput macrosInput) {
+
+		try {
+			// doesn't yet exist
+			IWorkbenchWindow targetWindow = PlatformUI.getWorkbench()
+					.openWorkbenchWindow(EdmModePerspective.ID, null);
+			Rectangle windowBounds = getWindowBounds(path);
+			targetWindow.getWorkbench().showPerspective(EdmModePerspective.ID,
+					targetWindow);
+			IViewPart opiView = targetWindow.getActivePage().showView(
+					OPIView.ID, null, IWorkbenchPage.VIEW_ACTIVATE);
+			final RunnerInput runnerInput = new RunnerInput(path,
+					null, macrosInput);
+			((OPIView) opiView).setOPIInput(runnerInput);
+			((OPIView) opiView).getOPIRuntimeDelegate().removeScrollbars();
+			targetWindow.getShell().setSize(windowBounds.width + 18,
+					windowBounds.height + 38);
+			CompactModeAction action = WorkbenchWindowService.getInstance()
+					.getCompactModeAction(targetWindow);
+			if (!action.isInCompactMode())
+				action.run();
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
+					.setText(path.toFile().getAbsolutePath());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 	
-	
-	
-	
-	
+	public static void runEdmShell(final IPath path, final MacrosInput macrosInput) {
+		try {
+			new OPIShell(Display.getCurrent(), path);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * @param displayModel
 	 */
