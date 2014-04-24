@@ -108,8 +108,7 @@ public class OPIView extends ViewPart implements IOPIRuntime {
 		}
 			
 		opiRuntimeDelegate.createGUI(parent);
-		// The zoom buttons are not particularly useful, and can mess up small displays.
-		//createToolbarButtons();
+		createToolbarButtons();
 		parent.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
