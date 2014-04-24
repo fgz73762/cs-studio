@@ -16,12 +16,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 
-public class OPIShell2 {
+public class OPIShell {
 	
 	private final Shell shell;
 	private final DisplayModel displayModel;
 
-    public OPIShell2(Display display, IPath path) {
+    public OPIShell(Display display, IPath path) {
         shell = new Shell(display);
         displayModel = new DisplayModel();
         final GraphicalViewer viewer = new GraphicalViewerImpl();
