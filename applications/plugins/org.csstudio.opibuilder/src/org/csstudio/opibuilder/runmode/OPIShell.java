@@ -24,10 +24,9 @@ public class OPIShell {
 
     public OPIShell(Display display, IPath path) {
         shell = new Shell(display);
-        displayModel = new DisplayModel();
+        displayModel = new DisplayModel(path);
         final GraphicalViewer viewer = new GraphicalViewerImpl();
 
-       
         shell.setLayout(new FillLayout());
        
         try {
@@ -58,6 +57,7 @@ public class OPIShell {
 		});
         shell.pack();
         shell.open();
+        shell.setActive();
     }
     
     public Shell getShell() {
