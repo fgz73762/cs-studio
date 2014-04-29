@@ -295,7 +295,7 @@ public class RunModeService {
 	
 	public static void runEdmShell(final IPath path, final MacrosInput macrosInput) {
 		try {
-			new OPIShell(Display.getCurrent(), path);
+			new OPIShell(Display.getCurrent(), path, macrosInput);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

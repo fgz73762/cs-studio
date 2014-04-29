@@ -3,8 +3,10 @@ package org.csstudio.opibuilder.runmode;
 
 import org.csstudio.opibuilder.editparts.ExecutionMode;
 import org.csstudio.opibuilder.editparts.WidgetEditPartFactory;
+import org.csstudio.opibuilder.model.AbstractContainerModel;
 import org.csstudio.opibuilder.model.DisplayModel;
 import org.csstudio.opibuilder.persistence.XMLUtil;
+import org.csstudio.opibuilder.util.MacrosInput;
 import org.csstudio.opibuilder.util.ResourceUtil;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.gef.GraphicalViewer;
@@ -22,7 +24,7 @@ public class OPIShell {
 	private final Shell shell;
 	private final DisplayModel displayModel;
 
-    public OPIShell(Display display, IPath path) {
+    public OPIShell(Display display, IPath path, MacrosInput macrosInput) {
         shell = new Shell(display);
         displayModel = new DisplayModel(path);
         final GraphicalViewer viewer = new GraphicalViewerImpl();
@@ -33,6 +35,12 @@ public class OPIShell {
             XMLUtil.fillDisplayModelFromInputStream(ResourceUtil.pathToInputStream(path), displayModel);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        
+        if(macrosInput != null) {
+        	macrosInput = macrosInput.getCopy();
+        	macrosInput.getMacrosMap().putAll(displayModel.getMacrosInput().getMacrosMap());
+        	displayModel.setPropertyValue(AbstractContainerModel.PROP_MACROS, macrosInput);
         }
        
         viewer.setEditPartFactory(new WidgetEditPartFactory(ExecutionMode.RUN_MODE));
