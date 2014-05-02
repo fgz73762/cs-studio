@@ -488,12 +488,14 @@ public abstract class AbstractBaseEditPart extends AbstractGraphicalEditPart imp
 				if(me.button != 2) return;
 				if(getModel() instanceof AbstractPVWidgetModel) {
 					String pvName = ((AbstractPVWidgetModel)getModel()).getPVName();
-					Display display = Display.getCurrent();
-					Clipboard clipboard = new Clipboard(display);
-					clipboard.setContents(new Object[] {pvName}, 
-							new Transfer[] {TextTransfer.getInstance()},
-							DND.SELECTION_CLIPBOARD);
-					clipboard.dispose();
+					if (pvName != "" && pvName != null) {
+						Display display = Display.getCurrent();
+						Clipboard clipboard = new Clipboard(display);
+						clipboard.setContents(new Object[] {pvName},
+								new Transfer[] {TextTransfer.getInstance()},
+								DND.SELECTION_CLIPBOARD);
+						clipboard.dispose();
+					}
 				}
 			}
 		});
@@ -501,7 +503,6 @@ public abstract class AbstractBaseEditPart extends AbstractGraphicalEditPart imp
 		if (getWidgetModel().isEnabled() && actions != null) {
 			figure.setCursor(Cursors.HAND);
 			figure.addMouseListener(new MouseListener.Stub() {
-				
 
 				@Override
 				public void mousePressed(MouseEvent me) {
