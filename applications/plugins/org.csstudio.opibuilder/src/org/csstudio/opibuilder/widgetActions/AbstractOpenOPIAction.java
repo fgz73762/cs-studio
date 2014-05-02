@@ -53,11 +53,19 @@ public abstract class AbstractOpenOPIAction extends AbstractWidgetAction {
 		// read file
 		IPath absolutePath = getPath();
 		if (!absolutePath.isAbsolute()) {
-			absolutePath = ResourceUtil.buildAbsolutePath(getWidgetModel(),
-					getPath());		
-			if(!ResourceUtil.isExsitingFile(absolutePath, true)){
-				//search from OPI search path
-				absolutePath = ResourceUtil.getFileOnSearchPath(getPath(), true);
+			// If opi.dir macro is specified, use it instead of just determining
+			// location of opi
+			String opiDir = getMacrosInput().getMacrosMap().get("opi.dir");
+			if (opiDir != null) {
+				IPath workingDir = new Path(opiDir);
+				absolutePath = workingDir.append(absolutePath);
+			} else {
+				absolutePath = ResourceUtil.buildAbsolutePath(getWidgetModel(),
+						getPath());
+				if(!ResourceUtil.isExsitingFile(absolutePath, true)){
+					//search from OPI search path
+					absolutePath = ResourceUtil.getFileOnSearchPath(getPath(), true);
+				}
 			}
 		}
 		if (absolutePath == null || !(absolutePath.toFile().exists()))
