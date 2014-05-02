@@ -28,10 +28,7 @@ public class OpenEdmOpiAction extends AbstractOpenOPIAction {
 	
 	@Override
 	protected void openOPI(IPath absolutePath) {
-
-			System.out.println("opening" + absolutePath.toOSString());
-			RunModeService.runEdmShell(absolutePath, getMacrosInput());
-
+		RunModeService.runEdmShell(absolutePath, getMacrosInput());
 	}
 
 //	protected Position getPosition(){
