@@ -1,0 +1,61 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 815
+y 278
+w 304
+h 436
+font "arial-medium-r-18.0"
+ctlFont "arial-medium-r-18.0"
+btnFont "arial-medium-r-18.0"
+fgColor index 14
+bgColor index 3
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+title "Menu Mux Test"
+showGrid
+snapToGrid
+gridSize 8
+disableScroll
+endScreenProperties
+
+# (Menu Mux)
+object menuMuxClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 100
+y 24
+w 72
+h 24
+fgColor index 14
+bgColor index 4
+topShadowColor index 1
+botShadowColor index 11
+font "arial-medium-r-12.0"
+numItems 3
+symbolTag {
+  0 "volts"
+  1 "dBm"
+  2 "watts"
+}
+symbol0 {
+  0 "d"
+  1 "e"
+  2 "f"
+}
+value0 {
+  0 "LI-RF-DASU-01:DIODE"
+  1 "LI-RF-DASU-01:DIODE:DBM"
+  2 "LI-RF-DASU-01:DIODE:W"
+}
+endObjectProperties
+
