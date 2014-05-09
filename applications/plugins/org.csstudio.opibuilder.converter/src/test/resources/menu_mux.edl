@@ -53,9 +53,9 @@ symbol0 {
   2 "f"
 }
 value0 {
-  0 "LI-RF-DASU-01:DIODE"
-  1 "LI-RF-DASU-01:DIODE:DBM"
-  2 "LI-RF-DASU-01:DIODE:W"
+  0 "DIODE:V"
+  1 "DIODE:DBM"
+  2 "DIODE:W"
 }
 endObjectProperties
 

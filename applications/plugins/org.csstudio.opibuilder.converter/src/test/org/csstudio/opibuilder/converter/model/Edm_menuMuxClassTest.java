@@ -87,4 +87,16 @@ public class Edm_menuMuxClassTest extends TestCase {
 		}
 	}
 
+	public void test_menuMuxClass_contains_list_of_value0() throws EdmException {
+
+		EdmMultiStrings tags = mux.getValueZero();
+		assertEquals(tags.getValueCount(), 3);
+
+		String[] expectedSymbols = new String[]{ "0 \"DIODE:V\"", "1 \"DIODE:DBM\"", "2 \"DIODE:W\"" };
+
+		for (int index = 0; index < tags.getValueCount(); index++) {
+			assertEquals(expectedSymbols[index], tags.getValue(index));
+		}
+	}
+
 }
