@@ -48,9 +48,6 @@ public class Opi_activeSymbolClass extends OpiWidget {
 		setVersion(version);
 		setName(name);
 
-		if (r.getFile() != null) {
-			new OpiString(widgetContext, "image_file", convertToPng(r.getFile()));
-		}	
 
 		new OpiInt(widgetContext, "border_style", 0);
 		new OpiInt(widgetContext, "symbol_number", 0);
@@ -58,6 +55,10 @@ public class Opi_activeSymbolClass extends OpiWidget {
 		
 		String s = r.getFile();
 		int width = pngSizes.get(s);
+
+		if (r.getFile() != null) {
+			new OpiString(widgetContext, "image_file", convertToPng(r.getFile(), width));
+		}	
 		
 		new OpiInt(widgetContext, "sub_image_width", width);
 		//single pv, no truth table
@@ -176,11 +177,11 @@ public class Opi_activeSymbolClass extends OpiWidget {
 
 	}
 	
-	public static  String convertToPng(String originPath) {
+	public static  String convertToPng(String originPath, int width) {
 	    if (originPath.endsWith(".edl")) {
-	        originPath = originPath.replace(".edl", ".png");
+	        originPath = originPath.replace(".edl", "-" + width + ".png");
 	    } else {
-	        originPath = originPath + ".png";
+	        originPath = originPath + "-" + width + ".png";
 	    }
 	  return originPath;
 	}
