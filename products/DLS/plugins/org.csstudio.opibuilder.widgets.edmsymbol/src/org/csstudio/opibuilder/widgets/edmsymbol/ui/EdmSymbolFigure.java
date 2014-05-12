@@ -66,8 +66,8 @@ public class EdmSymbolFigure extends Figure {
 		repaint();
 	}
 	
-	public void setSubImageSelection(int imageNum) {
-		this.subImageSelection = imageNum;
+	public void setSubImageSelection(int symbolNum) {
+		this.subImageSelection = symbolNum;
 		repaint();
 	}
 

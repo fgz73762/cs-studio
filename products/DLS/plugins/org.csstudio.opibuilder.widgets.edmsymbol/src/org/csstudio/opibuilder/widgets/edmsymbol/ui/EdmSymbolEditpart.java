@@ -16,7 +16,7 @@ public class EdmSymbolEditpart extends AbstractPVWidgetEditPart {
 	protected IFigure doCreateFigure() {
 		EdmSymbolModel model = (EdmSymbolModel) getModel();
 		EdmSymbolFigure figure = new EdmSymbolFigure(model.getFilename());
-		figure.setSubImageSelection(/* TODO: Start with invalid value */ 0);
+		figure.setSubImageSelection(model.getSymbolNum());
 		figure.setSubImageWidth(model.getSubImageWidth());
 		return figure;
 	}
@@ -51,13 +51,14 @@ public class EdmSymbolEditpart extends AbstractPVWidgetEditPart {
 		// changes to PV value
 		handler = new IWidgetPropertyChangeHandler() {
 			public boolean handleChange(Object oldValue, Object newValue, IFigure figure) {
-				if(newValue == null || !(newValue instanceof VType)) return false;
+				if(newValue == null) return false;
+				int nv = (int) newValue;
 				EdmSymbolFigure edmFigure = (EdmSymbolFigure) figure;
-				edmFigure.setSubImageSelection((int) VTypeHelper.getDouble((VType)newValue));
+				edmFigure.setSubImageSelection(nv);
 				return false;
 			}
 		};
-		setPropertyChangeHandler(AbstractPVWidgetModel.PROP_PVVALUE, handler);
+		setPropertyChangeHandler(EdmSymbolModel.PROP_SYMBOL_NUMBER, handler);
 	}
 
 }

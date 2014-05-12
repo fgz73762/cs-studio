@@ -3,6 +3,7 @@ package org.csstudio.opibuilder.widgets.edmsymbol.ui;
 import org.csstudio.opibuilder.model.AbstractPVWidgetModel;
 import org.csstudio.opibuilder.properties.DoubleProperty;
 import org.csstudio.opibuilder.properties.FilePathProperty;
+import org.csstudio.opibuilder.properties.IntegerProperty;
 import org.csstudio.opibuilder.properties.WidgetPropertyCategory;
 import org.csstudio.opibuilder.util.ResourceUtil;
 import org.eclipse.core.runtime.IPath;
@@ -13,6 +14,7 @@ public class EdmSymbolModel extends AbstractPVWidgetModel {
 	
 	public static final String PROP_EDM_IMAGE_FILE = "image_file";
 	public static final String PROP_SUB_IMAGE_WIDTH= "sub_image_width";
+	public static final String PROP_SYMBOL_NUMBER = "symbol_number";
 
 	private static final String[] FILE_EXTENSIONS = new String[] {"jpg", "jpeg", "gif", "bmp", "png"};
 
@@ -26,6 +28,7 @@ public class EdmSymbolModel extends AbstractPVWidgetModel {
 	protected void configureProperties() {
 		addProperty(new FilePathProperty(PROP_EDM_IMAGE_FILE, "Image File", WidgetPropertyCategory.Basic, new Path(""), FILE_EXTENSIONS));
 		addProperty(new DoubleProperty(PROP_SUB_IMAGE_WIDTH, "Sub Image Width", WidgetPropertyCategory.Basic, 10));
+		addProperty(new IntegerProperty(PROP_SYMBOL_NUMBER, "Symbol Number", WidgetPropertyCategory.Behavior, 0));
 	}
 
 	@Override
@@ -46,4 +49,8 @@ public class EdmSymbolModel extends AbstractPVWidgetModel {
 		return width.intValue();
 	}
 
+	public int getSymbolNum() {
+		int name = (int) getProperty(PROP_SYMBOL_NUMBER).getPropertyValue();
+		return name;
+	}
 }
