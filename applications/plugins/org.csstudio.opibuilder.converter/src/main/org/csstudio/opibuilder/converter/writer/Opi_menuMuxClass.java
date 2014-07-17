@@ -1,8 +1,5 @@
 package org.csstudio.opibuilder.converter.writer;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.log4j.Logger;
 import org.csstudio.opibuilder.converter.model.EdmMultiStrings;
 import org.csstudio.opibuilder.converter.model.Edm_menuMuxClass;
@@ -11,7 +8,7 @@ import org.w3c.dom.Element;
 public class Opi_menuMuxClass extends OpiWidget {
 
 	private static Logger log = Logger.getLogger("org.csstudio.opibuilder.converter.writer.Opi_menuMuxClass");
-	private static final String typeId = "ComboBox";
+	private static final String typeId = "MuxMenu";
 	private static final String name = "EDM MenuMux";
 	private static final String version = "1.0";
 
@@ -38,6 +35,30 @@ public class Opi_menuMuxClass extends OpiWidget {
 			Element itemElement = con.getDocument().createElement("s");
 			itemElement.appendChild(con.getDocument().createTextNode(symbol));
 			itemsElement.appendChild(itemElement);
+		}
+
+		Element valuesElement = con.getDocument().createElement("values");
+		widget.appendChild(valuesElement);
+		EdmMultiStrings edmZero = r.getValueZero();
+
+		for (int index = 0; index < r.getNumItems(); index++)
+		{
+			String symbol = edmZero.getValue(index).split("\"")[1];
+			Element valueElement = con.getDocument().createElement("v");
+			valueElement.appendChild(con.getDocument().createTextNode(symbol));
+			valuesElement.appendChild(valueElement);
+		}
+
+		Element zerosElement = con.getDocument().createElement("zeros");
+		widget.appendChild(zerosElement);
+		EdmMultiStrings edmVals = r.getSymbolZero();
+
+		for (int index = 0; index < r.getNumItems(); index++)
+		{
+			String symbol = edmVals.getValue(index).split("\"")[1];
+			Element zeroElement = con.getDocument().createElement("z");
+			zeroElement.appendChild(con.getDocument().createTextNode(symbol));
+			zerosElement.appendChild(zeroElement);
 		}
 		log.debug("Edm_menuMuxClass written.");
 	}
