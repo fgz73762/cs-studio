@@ -12,6 +12,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
+    <module>org.csstudio.logbook.dls</module>
     <module>org.csstudio.product</module>
     <module>org.csstudio.startup.intro</module>
   </modules>
