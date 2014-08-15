@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Auto-Complete UI Helper implementation for RAP
 Bundle-SymbolicName: org.csstudio.autocomplete.ui.rap;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.1.qualifier
 Bundle-Vendor: Fred Arnaud <frederic.arnaud@iter.org> - ITER
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Description: Abstraction to support both RCP and RAP

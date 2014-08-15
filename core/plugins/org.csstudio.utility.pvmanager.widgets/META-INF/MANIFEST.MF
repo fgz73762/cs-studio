@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Widgets based on pvManager data and connection
 Bundle-SymbolicName: org.csstudio.utility.pvmanager.widgets;singleton:=true
-Bundle-Version: 3.2.0.qualifier
+Bundle-Version: 3.2.1.qualifier
 Bundle-Activator: org.csstudio.utility.pvmanager.widgets.Activator
 Bundle-Description: Set of widgets implemented on top of PVManager
 Bundle-Localization: plugin

@@ -88,7 +88,7 @@
     <module>org.csstudio.diag.pvmanager.probe</module>
     <module>org.csstudio.display.pace</module>
     <module>org.csstudio.display.pvtable</module>
-    <module>org.csstudio.display.pvtable.test</module>
+    <!--<module>org.csstudio.display.pvtable.test</module>-->
     <module>org.csstudio.display.rdbtable</module>
     <module>org.csstudio.domain.common</module>
     <module>org.csstudio.domain.common.test</module>
@@ -218,7 +218,7 @@
     <!--<module>org.csstudio.utility.tine</module>--><!-- depends on org.csstudio.platform.simpledal -->
     <!--<module>org.csstudio.utility.tine.ui</module>--><!-- depends on org.csstudio.utility.tine -->
     <module>org.csstudio.utility.treemodel</module>
-    <module>org.csstudio.utility.treemodel.test</module>
+    <!--<module>org.csstudio.utility.treemodel.test</module>-->
     <module>org.csstudio.vtype.pv</module>
     <!--<module>org.custommonkey.xmlunit</module>--><!-- use plugin from Orbit repository -->
     <!--<module>org.eclipse.nebula.jface.gridviewer</module>--><!-- Moved to third party repository -->
