@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Security UI
 Bundle-Description: Authentication and Authorization UI
 Bundle-SymbolicName: org.csstudio.security.ui;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.1.qualifier
 Bundle-Vendor: Kay Kasemir <kasemirk@ornl.gov> - SNS
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Localization: plugin
