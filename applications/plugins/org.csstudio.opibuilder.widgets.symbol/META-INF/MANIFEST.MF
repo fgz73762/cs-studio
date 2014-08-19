@@ -10,7 +10,9 @@ Require-Bundle: org.eclipse.ui;resolution:=optional,
  org.csstudio.opibuilder,
  org.csstudio.opibuilder.widgets,
  org.csstudio.swt.widgets,
- org.apache.commons.lang
+ org.apache.commons.lang,
+ org.csstudio.ui.util,
+ org.eclipse.ui.views
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .
