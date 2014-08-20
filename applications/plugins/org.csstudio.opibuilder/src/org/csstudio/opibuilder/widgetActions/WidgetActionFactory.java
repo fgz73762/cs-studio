@@ -20,6 +20,7 @@ public class WidgetActionFactory {
 	public enum ActionType{
 		OPEN_DISPLAY("Open OPI", createImage("icons/OPIRunner.png")), //$NON-NLS-2$
 		OPEN_OPI_IN_VIEW("Open OPI in View", createImage("icons/OPIRunner.png")), //$NON-NLS-2$
+		OPEN_EDM_OPI("Open EDM OPI", createImage("icons/OPIRunner.png")), //$NON-NLS-2$
 		WRITE_PV("Write PV", createImage("icons/writePV.png")), //$NON-NLS-2$
 		EXECUTE_CMD("Execute Command", createImage("icons/command.gif")), //$NON-NLS-2$
 		EXECUTE_JAVASCRIPT("Execute Javascript", createImage("icons/exeJS.png")),//$NON-NLS-2$
@@ -79,6 +80,8 @@ public class WidgetActionFactory {
 			return new OpenDisplayAction();		
 		case OPEN_OPI_IN_VIEW:
 			return new OpenOPIInViewAction();
+		case OPEN_EDM_OPI:
+			return new OpenEdmOpiAction();
 		case WRITE_PV:
 			return new WritePVAction();
 		case OPEN_FILE:

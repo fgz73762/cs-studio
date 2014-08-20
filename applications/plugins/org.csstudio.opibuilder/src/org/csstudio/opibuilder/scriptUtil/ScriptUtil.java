@@ -15,7 +15,9 @@ import org.csstudio.opibuilder.widgetActions.AbstractOpenOPIAction;
 import org.csstudio.opibuilder.widgetActions.ExecuteCommandAction;
 import org.csstudio.opibuilder.widgetActions.OpenDisplayAction;
 import org.csstudio.opibuilder.widgetActions.OpenOPIInViewAction;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -63,45 +65,55 @@ public class ScriptUtil {
 		action.setPropertyValue(OpenDisplayAction.PROP_MACROS, macrosInput);
 		action.run();
 	}
-	
+
 	/**
 	 * Close current active OPI.
 	 */
-	public static void closeCurrentOPI(){
+	public static void closeCurrentOPI() {
 		try {
-			IWorkbenchPage activePage = 
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			IWorkbenchPart activePart = activePage.getActivePart();
-			
-			if(activePart instanceof IEditorPart){
-				activePage.closeEditor((IEditorPart) activePart, false);
-			}else if(activePart instanceof IViewPart){
-				activePage.hideView((IViewPart) activePart);
+
+			Shell active = Display.getCurrent().getActiveShell();
+			if (active.getChildren().length < 2) { // EDM shell
+				active.close();
+			} else { // workbench
+				IWorkbenchPage activePage = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage();
+				IWorkbenchPart activePart = activePage.getActivePart();
+
+				if (activePart instanceof IEditorPart) {
+					activePage.closeEditor((IEditorPart) activePart, false);
+				} else if (activePart instanceof IViewPart) {
+					activePage.hideView((IViewPart) activePart);
+
+				}
 			}
 		} catch (NullPointerException e) {
 
 		}
 	}
-	
-	
-	
-	/**{@link Deprecated} see {@link #makeLogbookEntry(String, String)}
+
+	/**
+	 * {@link Deprecated} see {@link #makeLogbookEntry(String, String)}
+	 * 
 	 * @param filePath
 	 */
 	public final static void makeElogEntry(final String filePath) {
 		makeLogbookEntry("", filePath);
 	}
-	/**	 
+
+	/**
 	 * Pop up a logbook dialog to make a logbook entry.
 	 * 
-	 * @param text text of the log entry.
+	 * @param text
+	 *            text of the log entry.
 	 * @param filePath
 	 *            path of a file to attach or null. It could be either a local
 	 *            file system file path or a workspace file path. File types
 	 *            that the logbook support depend on implementation but should
 	 *            include *.gif, *.jpg: File will be attached as image.
 	 */
-	public final static void makeLogbookEntry(final String text, final String filePath) {
+	public final static void makeLogbookEntry(final String text,
+			final String filePath) {
 		if (ScriptUtilSSHelper.getIMPL() != null)
 			ScriptUtilSSHelper.getIMPL().makeElogEntry(text, filePath);
 		else
@@ -127,65 +139,81 @@ public class ScriptUtil {
 		}
 
 	}
-	
-	/** Executing a system or shell command.
-	 *  On Unix, that could be anything in the PATH.
-	 *  <p>
-	 *  Several things can happen:
-	 *  <ul>
-	 *  <li>Command finishes OK right away
-	 *  <li>Command gives error right away
-	 *  <li>Command runs for a long time, eventually giving error or OK.
-	 *  </ul>
-	 *  The command executor waits a little time to see if the command
-	 *  finishes, and calls back in case of an error.
-	 *  When the command finishes right away OK or runs longer,
-	 *  we leave it be. Command output will be printed on BOY console.
-	 *  
-	 *  @param command Command to run. Format depends on OS.
-     *  @param wait Time to wait for completion in seconds
-     */
-	public final static void executeSystemCommand(String command, int wait){
+
+	/**
+	 * Executing a system or shell command. On Unix, that could be anything in
+	 * the PATH.
+	 * <p>
+	 * Several things can happen:
+	 * <ul>
+	 * <li>Command finishes OK right away
+	 * <li>Command gives error right away
+	 * <li>Command runs for a long time, eventually giving error or OK.
+	 * </ul>
+	 * The command executor waits a little time to see if the command finishes,
+	 * and calls back in case of an error. When the command finishes right away
+	 * OK or runs longer, we leave it be. Command output will be printed on BOY
+	 * console.
+	 * 
+	 * @param command
+	 *            Command to run. Format depends on OS.
+	 * @param wait
+	 *            Time to wait for completion in seconds
+	 */
+	public final static void executeSystemCommand(String command, int wait) {
 		ExecuteCommandAction action = new ExecuteCommandAction();
 		action.setPropertyValue(ExecuteCommandAction.PROP_COMMAND, command);
 		action.setPropertyValue(ExecuteCommandAction.PROP_WAIT_TIME, wait);
 		action.run();
 	}
-	
-	/**Execute a runnable in UI thread.
-	 * @param runnable the runnable to be executed.
-	 * @param widget any widget. It is referred to get the UI thread.
+
+	/**
+	 * Execute a runnable in UI thread.
+	 * 
+	 * @param runnable
+	 *            the runnable to be executed.
+	 * @param widget
+	 *            any widget. It is referred to get the UI thread.
 	 */
-	public final static void execInUI(Runnable runnable, 
-			AbstractBaseEditPart widget){
+	public final static void execInUI(Runnable runnable,
+			AbstractBaseEditPart widget) {
 		widget.getViewer().getControl().getDisplay().asyncExec(runnable);
 	}
-	
+
 	/**
 	 * @return true if it the OPI is running in WebOPI.
 	 */
-	public final static boolean isWebOPI(){
+	public final static boolean isWebOPI() {
 		return OPIBuilderPlugin.isRAP();
 	}
-	
-	/**If the current OPI is running on Mobile device. This method can only be called in UI thread.
-	 * @return true if it the OPI is running in mobile device such as Android, iphone, iPad, iPod and blackberry.
+
+	/**
+	 * If the current OPI is running on Mobile device. This method can only be
+	 * called in UI thread.
+	 * 
+	 * @return true if it the OPI is running in mobile device such as Android,
+	 *         iphone, iPad, iPod and blackberry.
 	 */
-	public final static boolean isMobile(){
+	public final static boolean isMobile() {
 		return OPIBuilderPlugin.isMobile(Display.getCurrent());
 	}
 
-	/**If the current OPI is running on Mobile device. This method can be called in non-UI thread.
-	 * @param widget the widget on which the script is attached to. 
-	 * @return true if it the OPI is running in mobile device such as Android, iphone, iPad, iPod and blackberry.
+	/**
+	 * If the current OPI is running on Mobile device. This method can be called
+	 * in non-UI thread.
+	 * 
+	 * @param widget
+	 *            the widget on which the script is attached to.
+	 * @return true if it the OPI is running in mobile device such as Android,
+	 *         iphone, iPad, iPod and blackberry.
 	 */
-	public final static boolean isMobile(AbstractBaseEditPart widget){
-		return OPIBuilderPlugin.isMobile(widget.getViewer().getControl().getDisplay());
+	public final static boolean isMobile(AbstractBaseEditPart widget) {
+		return OPIBuilderPlugin.isMobile(widget.getViewer().getControl()
+				.getDisplay());
 	}
-	
-	public final static Version getBOYVersion(){
+
+	public final static Version getBOYVersion() {
 		return OPIBuilderPlugin.getDefault().getBundle().getVersion();
 	}
-	
-	
+
 }

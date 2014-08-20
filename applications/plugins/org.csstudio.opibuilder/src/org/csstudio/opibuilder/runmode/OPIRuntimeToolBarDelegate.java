@@ -51,11 +51,12 @@ public class OPIRuntimeToolBarDelegate{
 	
 	public void contributeToToolBar(IToolBarManager toolBarManager) {
 
+		// Minimise toolbar contributions to avoid changing OPI size.
 		toolBarManager.add(partZoomInAction);
 		toolBarManager.add(partZoomOutAction);
-		toolBarManager.add(partZoomComboContributionItem);
-		toolBarManager.add(backwardAction);
-		toolBarManager.add(forwardAction);
+		//toolBarManager.add(partZoomComboContributionItem);
+		//toolBarManager.add(backwardAction);
+		//toolBarManager.add(forwardAction);
 	}
 	
 	

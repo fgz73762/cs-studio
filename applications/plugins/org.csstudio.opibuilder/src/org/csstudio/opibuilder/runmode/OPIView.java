@@ -62,6 +62,7 @@ public class OPIView extends ViewPart implements IOPIRuntime {
 	public void init(IViewSite site, IMemento memento) throws PartInitException {
 		super.init(site, memento);
 		this.site = site;
+		
 		//site.getPage().addPartListener(partListener);
 		if (memento != null) {
 			IMemento inputMem = memento.getChild(TAG_INPUT);
