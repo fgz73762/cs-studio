@@ -68,11 +68,7 @@ public abstract class AbstractOpenOPIAction extends AbstractWidgetAction {
 				}
 			}
 		}
-		boolean workspaceFileExists = ResourcesPlugin.getWorkspace()
-				.getRoot().exists(absolutePath);
-		boolean absoluteFileExists = absolutePath.toFile().exists();
-		boolean fileExists = workspaceFileExists || absoluteFileExists;
-		if (absolutePath == null || !fileExists) {
+		if (absolutePath == null || !ResourceUtil.isExsitingFile(absolutePath, true)) {
 			try {
 				throw new FileNotFoundException(
 						NLS.bind("The file {0} does not exist.",
