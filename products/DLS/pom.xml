@@ -57,7 +57,7 @@
     </repository>-->
     <repository>
       <id>indigo</id>
-      <url>http://download.eclipse.org/releases/kepler</url>
+      <url>http://download.eclipse.org/releases/luna</url>
       <layout>p2</layout>
     </repository>
   </repositories>
