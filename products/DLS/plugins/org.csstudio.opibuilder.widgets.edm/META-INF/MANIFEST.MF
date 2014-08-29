@@ -17,6 +17,7 @@ Require-Bundle: org.eclipse.ui;resolution:=optional,
  org.eclipse.rap.ui;bundle-version="1.4.0";resolution:=optional,
  org.csstudio.rap.ui.util;bundle-version="1.0.0";resolution:=optional,
  org.eclipse.draw2d.rap;bundle-version="1.0.0";resolution:=optional,
- org.csstudio.opibuilder.widgets
+ org.csstudio.opibuilder.widgets,
+ org.eclipse.swt;bundle-version="3.103.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
