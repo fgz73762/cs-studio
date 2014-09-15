@@ -16,6 +16,8 @@
       [Enter License Description here.]
    </license>
 
+  
+
    <plugin
          id="org.csstudio.autocomplete.pvmanager.formula"
          download-size="0"

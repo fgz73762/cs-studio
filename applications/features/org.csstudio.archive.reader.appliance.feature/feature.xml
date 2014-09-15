@@ -17,6 +17,8 @@
       [Enter License Description here.]
    </license>
 
+   
+
    <plugin
          id="org.csstudio.archive.reader.appliance"
          download-size="0"

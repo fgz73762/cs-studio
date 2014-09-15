@@ -17,6 +17,8 @@
       GPL 2 with Classpath Exception for pvmanager libraries.
    </license>
 
+
+
    <plugin
          id="org.csstudio.platform.libs.jdbc"
          download-size="0"

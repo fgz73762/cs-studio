@@ -16,6 +16,8 @@
       [Enter License Description here.]
    </license>
 
+   
+
    <plugin
          id="org.csstudio.logbook.viewer"
          download-size="0"

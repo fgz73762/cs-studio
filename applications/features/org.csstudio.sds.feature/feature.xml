@@ -33,6 +33,8 @@ THE FULL LICENSE SPECIFYING FOR THE SOFTWARE THE REDISTRIBUTION, MODIFICATION, U
       <update url="http://eclipse.desy.de/update/"/>
    </url>
 
+   
+
    <plugin
          id="org.csstudio.sds"
          download-size="0"
