@@ -23,7 +23,7 @@ import org.w3c.dom.Element;
  */
 public class Opi_activeSymbolClass extends OpiWidget {
 
-	private static final String typeId = "edmsymbol.widget";
+	private static final String typeId = "edm.symbolwidget";
 	private static final String name = "EDM Symbol";
 	private static final String version = "1.0";
 	
@@ -37,6 +37,15 @@ public class Opi_activeSymbolClass extends OpiWidget {
 		pngSizes.put("digitelMpcIonp-symbol.edl", Integer.valueOf(33));
 		pngSizes.put("digitelMpcTsp-symbol.edl", Integer.valueOf(33));
 		pngSizes.put("rga-symbol.edl", Integer.valueOf(33));
+		pngSizes.put("absorber-symbol.edl", Integer.valueOf(17));
+		pngSizes.put("MPStempabs.edl", Integer.valueOf(20));
+		pngSizes.put("linev.edl", Integer.valueOf(20));
+		pngSizes.put("mirror.edl", Integer.valueOf(90));
+		pngSizes.put("absvw.edl", Integer.valueOf(100));
+		pngSizes.put("shuttersvw.edl", Integer.valueOf(25));
+		pngSizes.put("valvesvw.edl", Integer.valueOf(100));
+		pngSizes.put("fvalve.edl", Integer.valueOf(100));
+		pngSizes.put("leds.edl", Integer.valueOf(21));
 	}
 
 	/**
@@ -48,25 +57,34 @@ public class Opi_activeSymbolClass extends OpiWidget {
 		setVersion(version);
 		setName(name);
 
-
 		new OpiInt(widgetContext, "border_style", 0);
 		new OpiInt(widgetContext, "symbol_number", 0);
-		// Assume the symbol is square.
 		
 		String s = r.getFile();
-		int width = pngSizes.get(s);
 
 		if (r.getFile() != null) {
-			new OpiString(widgetContext, "image_file", convertToPng(r.getFile(), width));
+			int lastSlash = s.lastIndexOf('/');
+			String basename = s.substring(lastSlash + 1, s.length());
+			if (pngSizes.containsKey(basename)) {
+				int width = pngSizes.get(basename);
+				new OpiString(widgetContext, "image_file", convertToPng(r.getFile(), width));
+				new OpiInt(widgetContext, "sub_image_width", width);
+			} else {
+				System.out.println("No size for symbol " + s + " basename " + basename);
+			}
 		}	
 		
-		new OpiInt(widgetContext, "sub_image_width", width);
 		//single pv, no truth table
 		if (!r.isTruthTable() && r.getNumPvs() == 1 && r.getControlPvs()!=null) {
 			LinkedHashMap<String, Element> expressions = new LinkedHashMap<String, Element>();
 			Map<String, EdmDouble> minMap = r.getMinValues().getEdmAttributesMap();
 			Map<String, EdmDouble> maxMap = r.getMaxValues().getEdmAttributesMap();
 
+			// Handle invalid values
+			Element invalidNode = widgetContext.getDocument().createElement("value");
+			invalidNode.setTextContent("0");
+			expressions.put("PVUtil.getSeverity(pvs[0]) == -1", invalidNode);
+			
 			for (int i = 0; i < r.getNumStates(); i++) {
 				Element valueNode = widgetContext.getDocument().createElement("value");
 				double min = 0;
@@ -82,8 +100,8 @@ public class Opi_activeSymbolClass extends OpiWidget {
 			valueNode.setTextContent("0");
 			expressions.put("true", valueNode);
 
-			new OpiRule(widgetContext, "symbol_single_pv", "symbol_number", false, Arrays.asList(convertPVName(r
-					.getControlPvs().getEdmAttributesMap().get("0").get())), expressions);
+			new OpiRule(widgetContext, "symbol_single_pv", "pv_value", true, Arrays.asList(
+					convertPVName(r.getControlPvs().getEdmAttributesMap().get("0").get())), expressions);
 		}
 		/*
 		}else if(r.isTruthTable() && r.getNumPvs() >0 && r.getControlPvs()!=null){ //binary truth table
