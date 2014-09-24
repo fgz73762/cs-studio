@@ -95,8 +95,8 @@ public class Opi_activeSymbolClass extends OpiWidget {
 			valueNode.setTextContent("0");
 			expressions.put("true", valueNode);
 
-			new OpiRule(widgetContext, "symbol_single_pv", "symbol_number", false, Arrays.asList(convertPVName(r
-					.getControlPvs().getEdmAttributesMap().get("0").get())), expressions);
+			new OpiRule(widgetContext, "symbol_single_pv", "pv_value", true, Arrays.asList(
+					convertPVName(r.getControlPvs().getEdmAttributesMap().get("0").get())), expressions);
 		}
 		/*
 		}else if(r.isTruthTable() && r.getNumPvs() >0 && r.getControlPvs()!=null){ //binary truth table
