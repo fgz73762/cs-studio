@@ -80,6 +80,11 @@ public class Opi_activeSymbolClass extends OpiWidget {
 			Map<String, EdmDouble> minMap = r.getMinValues().getEdmAttributesMap();
 			Map<String, EdmDouble> maxMap = r.getMaxValues().getEdmAttributesMap();
 
+			// Handle invalid values
+			Element invalidNode = widgetContext.getDocument().createElement("value");
+			invalidNode.setTextContent("0");
+			expressions.put("PVUtil.getSeverity(pvs[0]) == -1", invalidNode);
+			
 			for (int i = 0; i < r.getNumStates(); i++) {
 				Element valueNode = widgetContext.getDocument().createElement("value");
 				double min = 0;
