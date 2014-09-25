@@ -31,21 +31,21 @@ public class Opi_activeSymbolClass extends OpiWidget {
 	private static HashMap<String, Integer> pngSizes = new HashMap<String, Integer>();
 	
 	static {
-		pngSizes.put("vacuumValve-symbol.edl", Integer.valueOf(33));
-		pngSizes.put("mks937aPirg-symbol.edl", Integer.valueOf(33));
-		pngSizes.put("mks937aImg-symbol.edl", Integer.valueOf(33));
-		pngSizes.put("digitelMpcIonp-symbol.edl", Integer.valueOf(33));
-		pngSizes.put("digitelMpcTsp-symbol.edl", Integer.valueOf(33));
-		pngSizes.put("rga-symbol.edl", Integer.valueOf(33));
-		pngSizes.put("absorber-symbol.edl", Integer.valueOf(17));
-		pngSizes.put("MPStempabs.edl", Integer.valueOf(20));
-		pngSizes.put("linev.edl", Integer.valueOf(20));
-		pngSizes.put("mirror.edl", Integer.valueOf(90));
-		pngSizes.put("absvw.edl", Integer.valueOf(100));
-		pngSizes.put("shuttersvw.edl", Integer.valueOf(25));
-		pngSizes.put("valvesvw.edl", Integer.valueOf(100));
-		pngSizes.put("fvalve.edl", Integer.valueOf(100));
-		pngSizes.put("leds.edl", Integer.valueOf(21));
+		pngSizes.put("vacuumValve-symbol.edl", Integer.valueOf(34));
+		pngSizes.put("mks937aPirg-symbol.edl", Integer.valueOf(34));
+		pngSizes.put("mks937aImg-symbol.edl", Integer.valueOf(34));
+		pngSizes.put("digitelMpcIonp-symbol.edl", Integer.valueOf(34));
+		pngSizes.put("digitelMpcTsp-symbol.edl", Integer.valueOf(34));
+		pngSizes.put("rga-symbol.edl", Integer.valueOf(34));
+		pngSizes.put("absorber-symbol.edl", Integer.valueOf(18));
+		pngSizes.put("MPStempabs.edl", Integer.valueOf(21));
+		pngSizes.put("linev.edl", Integer.valueOf(21));
+		pngSizes.put("mirror.edl", Integer.valueOf(91));
+		pngSizes.put("absvw.edl", Integer.valueOf(101));
+		pngSizes.put("shuttersvw.edl", Integer.valueOf(26));
+		pngSizes.put("valvesvw.edl", Integer.valueOf(101));
+		pngSizes.put("fvalve.edl", Integer.valueOf(101));
+		pngSizes.put("leds.edl", Integer.valueOf(22));
 	}
 
 	/**
