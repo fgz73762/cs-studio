@@ -14,6 +14,9 @@ public class MuxMenuModel extends ComboModel {
 	public final String ID = "org.csstudio.opibuilder.widgets.edm.muxmenuwidget";//$NON-NLS-1$
 	/**
 	 * Items of the combo.
+	 * 	items: the displayed text
+	 *  targets: the target (loc) PVs
+	 *  values: the PV names to forward to the target
 	 */
 	public static final String PROP_ITEMS = "items";//$NON-NLS-1$
 	public static final String PROP_TARGETS = "targets";//$NON-NLS-1$
@@ -31,10 +34,10 @@ public class MuxMenuModel extends ComboModel {
 				PROP_ITEMS, "Items", WidgetPropertyCategory.Behavior, new ArrayList<String>()));
 
 		addProperty(new StringListProperty(
-				PROP_ITEMS, "Values", WidgetPropertyCategory.Behavior, new ArrayList<String>()));
+				PROP_VALUES, "Values", WidgetPropertyCategory.Behavior, new ArrayList<String>()));
 
 		addProperty(new StringListProperty(
-				PROP_ITEMS, "Targets", WidgetPropertyCategory.Behavior, new ArrayList<String>()));
+				PROP_TARGETS, "Targets", WidgetPropertyCategory.Behavior, new ArrayList<String>()));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -52,12 +55,6 @@ public class MuxMenuModel extends ComboModel {
 	public List<String> getItems(){
 		return (List<String>)getPropertyValue(PROP_ITEMS);
 	}
-
-	@Override
-	public boolean isItemsFromPV(){
-		return (Boolean)getPropertyValue(PROP_ITEMS_FROM_PV);
-	}
-
 
 	@Override
 	public String getTypeID() {

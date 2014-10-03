@@ -60,6 +60,35 @@ public class Opi_menuMuxClass extends OpiWidget {
 			zeroElement.appendChild(con.getDocument().createTextNode(symbol));
 			zerosElement.appendChild(zeroElement);
 		}
+
+//		Element actionsElement = con.getDocument().createElement("actions");
+//		actionsElement.setAttribute("hook", "False");
+//		actionsElement.setAttribute("hook_all", "False");
+//		
+//		Element actionElement = con.getDocument().createElement("action");
+//		actionElement.setAttribute("type", "OPEN_DISPLAY");
+//		actionsElement.appendChild(actionElement);
+//
+//		Element pathElement = con.getDocument().createElement("path");
+//		pathElement.appendChild(con.getDocument().createTextNode("tbiPATH"));
+//		actionElement.appendChild(pathElement);
+//	
+//		Element macrosElement = con.getDocument().createElement("macros");
+//		Element parentMacrosElement = con.getDocument().createElement("include_parent_macros");
+//		parentMacrosElement.appendChild(con.getDocument().createTextNode("true"));
+//		macrosElement.appendChild(parentMacrosElement);
+//		actionElement.appendChild(macrosElement);
+//				
+//		Element replaceElement = con.getDocument().createElement("replace");
+//		replaceElement.appendChild(con.getDocument().createTextNode("1"));
+//		actionElement.appendChild(replaceElement);
+//		
+//		Element descriptionElement = con.getDocument().createElement("description");
+//		descriptionElement.appendChild(con.getDocument().createTextNode("Reload page on MuxMenu change"));
+//		actionElement.appendChild(descriptionElement);
+//
+//		widget.appendChild(actionsElement);
+
 		log.debug("Edm_menuMuxClass written.");
 	}
 

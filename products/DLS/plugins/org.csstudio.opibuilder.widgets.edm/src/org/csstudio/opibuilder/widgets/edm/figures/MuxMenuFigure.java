@@ -39,14 +39,14 @@ public class MuxMenuFigure extends AbstractSWTWidgetFigure<Combo> {
 	private Combo combo;
 	
 	public MuxMenuFigure(AbstractBaseEditPart editPart) {
-		super(editPart);		
+		super(editPart);
 		if(!runmode){
 			selector = new Triangle();	
 			selector.setBackgroundColor(DARK_GRAY_COLOR);
 			selector.setDirection(PositionConstants.SOUTH);
 			selector.setFill(true);
 			add(selector);
-		}				
+		}
 		
 	}
 	

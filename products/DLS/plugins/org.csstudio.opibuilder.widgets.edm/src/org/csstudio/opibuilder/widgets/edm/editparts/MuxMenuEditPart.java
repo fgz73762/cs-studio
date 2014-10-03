@@ -2,9 +2,9 @@ package org.csstudio.opibuilder.widgets.edm.editparts;
 
 import java.util.List;
 
+import org.csstudio.opibuilder.editparts.AbstractBaseEditPart;
 import org.csstudio.opibuilder.editparts.AbstractPVWidgetEditPart;
 import org.csstudio.opibuilder.editparts.ExecutionMode;
-import org.csstudio.opibuilder.model.AbstractPVWidgetModel;
 import org.csstudio.opibuilder.model.AbstractWidgetModel;
 import org.csstudio.opibuilder.properties.IWidgetPropertyChangeHandler;
 import org.csstudio.opibuilder.widgets.edm.figures.MuxMenuFigure;
@@ -17,6 +17,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
+import org.csstudio.opibuilder.scriptUtil.PVUtil;
 
 /**The editpart of a muxMenu.
  *
@@ -26,8 +27,8 @@ import org.eclipse.swt.widgets.Combo;
  */
 public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 
-	private IPVListener loadItemsFromPVListener;
-
+	private IPVListener monitorListener;
+	private IPV monitoredPV;
 	private Combo combo;
 	private SelectionListener comboSelectionListener;
 
@@ -44,11 +45,10 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 		} else {
 			System.err.println("Got model");
 		}
-		
+
 		MuxMenuFigure comboFigure = new MuxMenuFigure(this);
 		
 		combo = comboFigure.getSWTWidget();
-		
 		if (combo == null) {
 			System.err.println("NULL COMBO");
 			
@@ -63,8 +63,48 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 		} else {
 			System.err.println("Got items");
 		}
+		
+		if(comboSelectionListener !=null)
+			combo.removeSelectionListener(comboSelectionListener);
+		
+		comboSelectionListener = new MuxMenuSelectionListener(this);
+		combo.addSelectionListener(comboSelectionListener);
+
 		updateCombo(items);
+		
 		return comboFigure;
+	}
+	
+	private class MuxMenuSelectionListener extends SelectionAdapter {
+		private AbstractBaseEditPart parent;
+		
+		public MuxMenuSelectionListener(AbstractBaseEditPart parent) {
+			this.parent = parent;
+		}
+		
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+
+			MuxMenuModel model = getWidgetModel();
+
+			int selectedIdx = combo.getSelectionIndex();
+			List<String> targets = (List<String>)model.getPropertyValue(MuxMenuModel.PROP_TARGETS);
+			List<String> values = (List<String>)model.getPropertyValue(MuxMenuModel.PROP_VALUES);
+
+			if (monitoredPV != null) {
+				monitoredPV.removeListener(monitorListener);
+				monitoredPV.stop();
+			}
+			// Create a monitored PV
+			try {
+				monitoredPV = PVUtil.createPV(values.get(selectedIdx), parent);
+				monitorListener = new PVPipedListener("loc://" + targets.get(selectedIdx));
+				monitoredPV.addListener(monitorListener);
+			}
+			catch (Exception ex) {
+				// do nothing
+			}
+		}
 	}
 
 	/**
@@ -77,20 +117,6 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 			for(String item : items){
 				combo.add(item);
 			}
-
-			//write value to pv if pv name is not empty
-			if(getWidgetModel().getPVName().trim().length() > 0){
-				if(comboSelectionListener !=null)
-					combo.removeSelectionListener(comboSelectionListener);
-				comboSelectionListener = new SelectionAdapter(){
-						@Override
-						public void widgetSelected(SelectionEvent e) {
-							setPVValue(AbstractPVWidgetModel.PROP_PVNAME, combo.getText());
-						}
-				};
-				combo.addSelectionListener(comboSelectionListener);
-			}
-
 		}
 	}
 
@@ -102,11 +128,9 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 	@Override
 	protected void doDeActivate() {
 		super.doDeActivate();
-		if(getWidgetModel().isItemsFromPV()){
-			IPV pv = getPV(AbstractPVWidgetModel.PROP_PVNAME);
-			if(pv != null && loadItemsFromPVListener !=null){
-				pv.removeListener(loadItemsFromPVListener);
-			}
+
+		if (monitoredPV != null) {
+			monitoredPV.stop();
 		}
 	}
 
@@ -168,6 +192,27 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 			combo.select(((Number)value).intValue());
 		else
 			super.setValue(value);
+	}
+	
+	private final class PVPipedListener extends IPVListener.Stub {		
+
+		private String targetPV;
+
+		public PVPipedListener(String targetPV) {
+			System.out.println("Creating listenter for " + targetPV);
+			this.targetPV = targetPV;
+		}
+
+		@Override
+		public void valueChanged(IPV pv) {
+			/// On value change events, push the monitored PV value
+			/// to the target.
+			Object val = pv.getValue();
+			if (val != null) {
+				System.out.println("Pushing " + val + " to " + targetPV);
+				PVUtil.writePV(targetPV, pv.getValue());
+			}
+		}
 	}
 
 }
