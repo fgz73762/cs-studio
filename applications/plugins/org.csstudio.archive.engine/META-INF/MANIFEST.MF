@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.csstudio.utility.httpd;bundle-version="1.0.0",
  org.csstudio.archive.config;bundle-version="3.2.0",
  org.csstudio.archive.writer;bundle-version="3.2.0",
- org.csstudio.vtype.pv
+ org.csstudio.vtype.pv,
+ org.csstudio.utility.pvmanager.vtype;bundle-version="2.5.1"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
