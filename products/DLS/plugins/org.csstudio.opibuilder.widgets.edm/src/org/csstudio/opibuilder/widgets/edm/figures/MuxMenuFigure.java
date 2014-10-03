@@ -8,7 +8,6 @@ package org.csstudio.opibuilder.widgets.edm.figures;
  ******************************************************************************/
 
 
-
 import org.csstudio.opibuilder.editparts.AbstractBaseEditPart;
 import org.csstudio.opibuilder.widgets.figures.AbstractSWTWidgetFigure;
 import org.csstudio.ui.util.CustomMediaFactory;
