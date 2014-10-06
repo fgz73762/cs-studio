@@ -53,7 +53,7 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 			System.err.println("Got combo");
 		}
 
-		List<String> items = getWidgetModel().getItems();
+		List<String> items = model.getItems();
 		if (items == null) {
 			System.err.println("NULL ITEMS");
 			
@@ -68,10 +68,37 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 		combo.addSelectionListener(comboSelectionListener);
 
 		updateCombo(items);
-		
+
+		String initialState = model.getInitialState();
+		if (initialState == null) {
+			System.err.println("NULL initialState");
+		}
+		else {
+			System.err.println("Got initialState: " + initialState);
+		}
+		setInitialSelection(initialState);
+
 		return comboFigure;
 	}
-	
+
+	private void setInitialSelection(String initialState) {
+
+		// Default selection is the first element
+		combo.select(0);
+		if (initialState != null && !initialState.isEmpty()) {
+
+			try {
+				int selectedIndex = Integer.parseInt(initialState);
+				combo.select(selectedIndex);
+			}
+			catch (NumberFormatException ex) {
+				System.err.println("Invalid initial state: " + initialState);
+			}
+		}
+		// force a selection change event to set the associated loc:// pv
+		comboSelectionListener.widgetSelected(null);
+	}
+
 	private class MuxMenuSelectionListener extends SelectionAdapter {
 		/// Selection change handler for the MenuMux Combobox
 		@Override

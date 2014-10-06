@@ -10,6 +10,7 @@ public class Edm_menuMuxClass extends EdmWidget {
 	@EdmAttributeAn @EdmOptionalAn private EdmMultiStrings symbolTag;
 	@EdmAttributeAn @EdmOptionalAn private EdmMultiStrings symbol0;
 	@EdmAttributeAn @EdmOptionalAn private EdmMultiStrings value0;
+	@EdmAttributeAn @EdmOptionalAn private EdmString initialState;
 
 	public Edm_menuMuxClass(EdmEntity genericEntity) throws EdmException {
 		super(genericEntity);
@@ -17,6 +18,10 @@ public class Edm_menuMuxClass extends EdmWidget {
 
 	public int getNumItems() {
 		return numItems;
+	}
+
+	public EdmString getInitialState() {
+		return initialState;
 	}
 
 	public EdmMultiStrings getSymbolTags() {

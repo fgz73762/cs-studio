@@ -24,6 +24,11 @@ public class Opi_menuMuxClass extends OpiWidget {
 		setVersion(version);
 
 		Element widget = widgetContext.getElement();
+
+		if (r.getAttribute("initialState").isExistInEDL()) {
+			new OpiString(widgetContext, "initial", r.getInitialState());
+		}
+
 		Element itemsElement = con.getDocument().createElement("items");
 		widget.appendChild(itemsElement);
 

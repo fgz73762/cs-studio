@@ -3,6 +3,7 @@ package org.csstudio.opibuilder.widgets.edm.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.csstudio.opibuilder.properties.StringProperty;
 import org.csstudio.opibuilder.properties.StringListProperty;
 import org.csstudio.opibuilder.properties.WidgetPropertyCategory;
 import org.csstudio.opibuilder.widgets.model.ComboModel;
@@ -21,6 +22,7 @@ public class MuxMenuModel extends ComboModel {
 	public static final String PROP_ITEMS = "items";//$NON-NLS-1$
 	public static final String PROP_TARGETS = "targets";//$NON-NLS-1$
 	public static final String PROP_VALUES = "values";//$NON-NLS-1$
+	public static final String PROP_INITIAL_STATE = "initial";//$NON-NLS-1$
 
 	public MuxMenuModel() {
 		setBackgroundColor(new RGB(255,255,255));
@@ -38,6 +40,9 @@ public class MuxMenuModel extends ComboModel {
 
 		addProperty(new StringListProperty(
 				PROP_TARGETS, "Targets", WidgetPropertyCategory.Behavior, new ArrayList<String>()));
+
+		addProperty(new StringProperty(
+				PROP_INITIAL_STATE, "Initial State", WidgetPropertyCategory.Behavior, ""));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -49,11 +54,15 @@ public class MuxMenuModel extends ComboModel {
 	public List<String> getTargets(){
 		return (List<String>)getPropertyValue(PROP_TARGETS);
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<String> getItems(){
 		return (List<String>)getPropertyValue(PROP_ITEMS);
+	}
+
+	public String getInitialState(){
+		return (String)getPropertyValue(PROP_INITIAL_STATE);
 	}
 
 	@Override
