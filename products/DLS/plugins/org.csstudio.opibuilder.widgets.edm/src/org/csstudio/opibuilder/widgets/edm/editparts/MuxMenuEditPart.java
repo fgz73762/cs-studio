@@ -2,7 +2,6 @@ package org.csstudio.opibuilder.widgets.edm.editparts;
 
 import java.util.List;
 
-import org.csstudio.opibuilder.editparts.AbstractBaseEditPart;
 import org.csstudio.opibuilder.editparts.AbstractPVWidgetEditPart;
 import org.csstudio.opibuilder.editparts.ExecutionMode;
 import org.csstudio.opibuilder.model.AbstractWidgetModel;
@@ -10,7 +9,6 @@ import org.csstudio.opibuilder.properties.IWidgetPropertyChangeHandler;
 import org.csstudio.opibuilder.widgets.edm.figures.MuxMenuFigure;
 import org.csstudio.opibuilder.widgets.edm.model.MuxMenuModel;
 import org.csstudio.simplepv.IPV;
-import org.csstudio.simplepv.IPVListener;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -27,7 +25,6 @@ import org.csstudio.opibuilder.scriptUtil.PVUtil;
  */
 public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 
-	private IPVListener monitorListener;
 	private IPV monitoredPV;
 	private Combo combo;
 	private SelectionListener comboSelectionListener;
@@ -67,7 +64,7 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 		if(comboSelectionListener !=null)
 			combo.removeSelectionListener(comboSelectionListener);
 		
-		comboSelectionListener = new MuxMenuSelectionListener(this);
+		comboSelectionListener = new MuxMenuSelectionListener();
 		combo.addSelectionListener(comboSelectionListener);
 
 		updateCombo(items);
@@ -76,33 +73,21 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 	}
 	
 	private class MuxMenuSelectionListener extends SelectionAdapter {
-		private AbstractBaseEditPart parent;
-		
-		public MuxMenuSelectionListener(AbstractBaseEditPart parent) {
-			this.parent = parent;
-		}
-		
+		/// Selection change handler for the MenuMux Combobox
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-
+			/// On selected change put the selected PV name to the associated local pv (e.g. $d)
 			MuxMenuModel model = getWidgetModel();
 
 			int selectedIdx = combo.getSelectionIndex();
-			List<String> targets = (List<String>)model.getPropertyValue(MuxMenuModel.PROP_TARGETS);
-			List<String> values = (List<String>)model.getPropertyValue(MuxMenuModel.PROP_VALUES);
+			List<String> targets = model.getTargets();
+			List<String> values = model.getValues();
 
-			if (monitoredPV != null) {
-				monitoredPV.removeListener(monitorListener);
-				monitoredPV.stop();
-			}
-			// Create a monitored PV
-			try {
-				monitoredPV = PVUtil.createPV(values.get(selectedIdx), parent);
-				monitorListener = new PVPipedListener("loc://" + targets.get(selectedIdx));
-				monitoredPV.addListener(monitorListener);
-			}
-			catch (Exception ex) {
-				// do nothing
+			if (selectedIdx < targets.size() && selectedIdx < values.size()) {
+				String macro_pv = "loc://" + targets.get(selectedIdx);
+				String target_pv = values.get(selectedIdx);
+				System.out.println("Setting " + macro_pv + " to " + target_pv);
+				PVUtil.writePV(macro_pv, target_pv);
 			}
 		}
 	}
@@ -194,25 +179,4 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 			super.setValue(value);
 	}
 	
-	private final class PVPipedListener extends IPVListener.Stub {		
-
-		private String targetPV;
-
-		public PVPipedListener(String targetPV) {
-			System.out.println("Creating listenter for " + targetPV);
-			this.targetPV = targetPV;
-		}
-
-		@Override
-		public void valueChanged(IPV pv) {
-			/// On value change events, push the monitored PV value
-			/// to the target.
-			Object val = pv.getValue();
-			if (val != null) {
-				System.out.println("Pushing " + val + " to " + targetPV);
-				PVUtil.writePV(targetPV, pv.getValue());
-			}
-		}
-	}
-
 }
