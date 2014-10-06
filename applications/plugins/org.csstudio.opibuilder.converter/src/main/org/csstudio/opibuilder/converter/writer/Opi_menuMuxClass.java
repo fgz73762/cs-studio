@@ -8,7 +8,7 @@ import org.w3c.dom.Element;
 public class Opi_menuMuxClass extends OpiWidget {
 
 	private static Logger log = Logger.getLogger("org.csstudio.opibuilder.converter.writer.Opi_menuMuxClass");
-	private static final String typeId = "MuxMenu";
+	private static final String typeId = "edm.muxmenu";
 	private static final String name = "EDM MenuMux";
 	private static final String version = "1.0";
 

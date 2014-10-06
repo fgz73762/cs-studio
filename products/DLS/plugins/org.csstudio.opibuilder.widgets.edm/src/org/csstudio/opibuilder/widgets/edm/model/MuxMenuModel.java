@@ -11,7 +11,7 @@ import org.eclipse.swt.graphics.RGB;
 public class MuxMenuModel extends ComboModel {
 
 
-	public final String ID = "org.csstudio.opibuilder.widgets.edm.muxmenuwidget";//$NON-NLS-1$
+	public final String ID = "org.csstudio.opibuilder.widgets.edm.muxmenu";//$NON-NLS-1$
 	/**
 	 * Items of the combo.
 	 * 	items: the displayed text

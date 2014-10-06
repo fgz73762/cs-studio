@@ -5,6 +5,15 @@
          point="org.csstudio.opibuilder.widget">
       <widget
             category="Monitors"
+            description="Edm style muxMenu widget"
+            editpart_class="org.csstudio.opibuilder.widgets.edm.editparts.MuxMenuEditPart"
+            icon="icon/symbol.png"
+            model_class="org.csstudio.opibuilder.widgets.edm.model.MuxMenuModel"
+            name="MuxMenu Widget"
+            typeId="org.csstudio.opibuilder.widgets.edm.muxmenu">
+      </widget>
+      <widget
+            category="Monitors"
             description="Edm style symbol widget"
             editpart_class="org.csstudio.opibuilder.widgets.edm.editparts.EdmSymbolEditpart"
             icon="icon/symbol.png"
@@ -12,18 +21,6 @@
             name="Edm Symbol Widget"
             onlineHelpHtml="html/firststeps/imagebooleansymbolwidget.html"
             typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
-      </widget>
-   </extension>
-   <extension
-         point="org.csstudio.opibuilder.widget">
-      <widget
-            category="Monitors"
-            description="Edm style muxMenu widget"
-            editpart_class="org.csstudio.opibuilder.widgets.edm.editparts.MuxMenuEditPart"
-            icon="icon/symbol.png"
-            model_class="org.csstudio.opibuilder.widgets.edm.model.MuxMenuModel"
-            name="MuxMenu Widget"
-            typeId="org.csstudio.opibuilder.widgets.edm.muxmenuwidget">
       </widget>
    </extension>
 
