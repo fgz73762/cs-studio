@@ -23,7 +23,7 @@ public class Opi_menuMuxClass extends OpiWidget {
 		setName(name);
 		setVersion(version);
 
-		Element widget = (Element)con.getDocument().getElementsByTagName("widget").item(0);
+		Element widget = widgetContext.getElement();
 		Element itemsElement = con.getDocument().createElement("items");
 		widget.appendChild(itemsElement);
 
@@ -44,50 +44,22 @@ public class Opi_menuMuxClass extends OpiWidget {
 		for (int index = 0; index < r.getNumItems(); index++)
 		{
 			String symbol = edmZero.getValue(index).split("\"")[1];
-			Element valueElement = con.getDocument().createElement("v");
+			Element valueElement = con.getDocument().createElement("s");
 			valueElement.appendChild(con.getDocument().createTextNode(symbol));
 			valuesElement.appendChild(valueElement);
 		}
 
-		Element zerosElement = con.getDocument().createElement("zeros");
+		Element zerosElement = con.getDocument().createElement("targets");
 		widget.appendChild(zerosElement);
 		EdmMultiStrings edmVals = r.getSymbolZero();
 
 		for (int index = 0; index < r.getNumItems(); index++)
 		{
 			String symbol = edmVals.getValue(index).split("\"")[1];
-			Element zeroElement = con.getDocument().createElement("z");
+			Element zeroElement = con.getDocument().createElement("s");
 			zeroElement.appendChild(con.getDocument().createTextNode(symbol));
 			zerosElement.appendChild(zeroElement);
 		}
-
-//		Element actionsElement = con.getDocument().createElement("actions");
-//		actionsElement.setAttribute("hook", "False");
-//		actionsElement.setAttribute("hook_all", "False");
-//		
-//		Element actionElement = con.getDocument().createElement("action");
-//		actionElement.setAttribute("type", "OPEN_DISPLAY");
-//		actionsElement.appendChild(actionElement);
-//
-//		Element pathElement = con.getDocument().createElement("path");
-//		pathElement.appendChild(con.getDocument().createTextNode("tbiPATH"));
-//		actionElement.appendChild(pathElement);
-//	
-//		Element macrosElement = con.getDocument().createElement("macros");
-//		Element parentMacrosElement = con.getDocument().createElement("include_parent_macros");
-//		parentMacrosElement.appendChild(con.getDocument().createTextNode("true"));
-//		macrosElement.appendChild(parentMacrosElement);
-//		actionElement.appendChild(macrosElement);
-//				
-//		Element replaceElement = con.getDocument().createElement("replace");
-//		replaceElement.appendChild(con.getDocument().createTextNode("1"));
-//		actionElement.appendChild(replaceElement);
-//		
-//		Element descriptionElement = con.getDocument().createElement("description");
-//		descriptionElement.appendChild(con.getDocument().createTextNode("Reload page on MuxMenu change"));
-//		actionElement.appendChild(descriptionElement);
-//
-//		widget.appendChild(actionsElement);
 
 		log.debug("Edm_menuMuxClass written.");
 	}
