@@ -68,8 +68,12 @@ public class AlarmRepresentationScheme {
 	}
 	
 	public static Border getMajorBorder(BorderStyle borderStyle){
+		return getMajorBorder(borderStyle, ALARM_BORDER_WIDTH);
+	}
+	
+	public static Border getMajorBorder(BorderStyle borderStyle, int borderWidth){
 		BorderStyle newBorderStyle = getNewBorderStyle(borderStyle);
-		return BorderFactory.createBorder(newBorderStyle, ALARM_BORDER_WIDTH, getMajorColor(), ""); //$NON-NLS-1$
+		return BorderFactory.createBorder(newBorderStyle, borderWidth, getMajorColor(), ""); //$NON-NLS-1$
 	}
 
 	private static BorderStyle getNewBorderStyle(BorderStyle borderStyle) {
@@ -88,15 +92,23 @@ public class AlarmRepresentationScheme {
 	}
 	
 	public static Border getMinorBorder(BorderStyle borderStyle){
+		return getMinorBorder(borderStyle, ALARM_BORDER_WIDTH);
+	}
+	
+	public static Border getMinorBorder(BorderStyle borderStyle, int borderWidth){
 		BorderStyle newBorderStyle = getNewBorderStyle(borderStyle);
 
-		return BorderFactory.createBorder(newBorderStyle, ALARM_BORDER_WIDTH, getMinorColor(), ""); //$NON-NLS-1$
+		return BorderFactory.createBorder(newBorderStyle, borderWidth, getMinorColor(), ""); //$NON-NLS-1$
 	}
 	
 	public static Border getInvalidBorder(BorderStyle borderStyle){
+		return getInvalidBorder(borderStyle, ALARM_BORDER_WIDTH);
+	}
+
+	public static Border getInvalidBorder(BorderStyle borderStyle, int borderWidth){
 		BorderStyle newBorderStyle = getNewBorderStyle(borderStyle);
 
-		return BorderFactory.createBorder(newBorderStyle, ALARM_BORDER_WIDTH, getInValidColor(), ""); //$NON-NLS-1$
+		return BorderFactory.createBorder(newBorderStyle, borderWidth, getInValidColor(), ""); //$NON-NLS-1$
 	}
 	
 	public static Border getDisonnectedBorder(){

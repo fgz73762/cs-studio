@@ -579,15 +579,18 @@ public class PVWidgetEditpartDelegate implements IPVWidgetEditpart {
 							editpart.getWidgetModel().getName());
 				break;
 			case MAJOR:
-				alarmBorder = AlarmRepresentationScheme.getMajorBorder(editpart.getWidgetModel().getBorderStyle());
+				alarmBorder = AlarmRepresentationScheme.getMajorBorder(
+						editpart.getWidgetModel().getBorderStyle(), editpart.getWidgetModel().getBorderWidth());
 				break;
 			case MINOR:
-				alarmBorder = AlarmRepresentationScheme.getMinorBorder(editpart.getWidgetModel().getBorderStyle());
+				alarmBorder = AlarmRepresentationScheme.getMinorBorder(
+						editpart.getWidgetModel().getBorderStyle(), editpart.getWidgetModel().getBorderWidth());
 				break;
 			case INVALID:
 			case UNDEFINED:
 			default:
-				alarmBorder = AlarmRepresentationScheme.getInvalidBorder(editpart.getWidgetModel().getBorderStyle());
+				alarmBorder = AlarmRepresentationScheme.getInvalidBorder(
+						editpart.getWidgetModel().getBorderStyle(), editpart.getWidgetModel().getBorderWidth());
 				break;
 			}	
 			
