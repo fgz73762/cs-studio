@@ -29,12 +29,6 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 	private Combo combo;
 	private SelectionListener comboSelectionListener;
 
-	@Override
-	public void activate() {
-		super.activate();
-
-		setInitialSelection();
-	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -44,19 +38,13 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 
 		if (model == null) {
 			System.err.println("NULL model");
-			
-		} else {
-			System.err.println("Got model");
 		}
 
 		MuxMenuFigure comboFigure = new MuxMenuFigure(this);
-		
+
 		combo = comboFigure.getSWTWidget();
 		if (combo == null) {
 			System.err.println("NULL COMBO");
-			
-		} else {
-			System.err.println("Got combo");
 		}
 
 		List<String> items = model.getItems();
@@ -81,12 +69,6 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 	private void setInitialSelection() {
 		if (combo.getItemCount() > 0) {
 			String initialState = getWidgetModel().getInitialState();
-			if (initialState == null) {
-				System.err.println("NULL initialState");
-			}
-			else {
-				System.err.println("Got initialState: " + initialState);
-			}
 
 			if (initialState != null && !initialState.isEmpty()) {
 				try {
@@ -109,7 +91,7 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 
 	private class MuxMenuSelectionListener extends SelectionAdapter {
 		/// Selection change handler for the MenuMux Combobox
-		private static final int TIMEOUT = 10;  // put timeout (s)
+		private static final int TIMEOUT_MS = 10000;  // put timeout (ms)
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
@@ -124,10 +106,10 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 			if (selectedIdx < targets.size() && selectedIdx < values.size()) {
 				String macro_pv = "loc://" + targets.get(selectedIdx);
 				String target = values.get(selectedIdx);
-				System.out.println("Setting " + macro_pv + " to " + target);
+
 				try {
 					IPV pv = BOYPVFactory.createPV(macro_pv);
-					if (!pv.setValue(target.toString(), TIMEOUT*1000)) {
+					if (!pv.setValue(target, TIMEOUT_MS)) {
 						throw new Exception("Write Failed!");
 					}
 				} catch (Exception ex) {
@@ -151,11 +133,28 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MuxMenuModel getWidgetModel() {
 		return (MuxMenuModel)getModel();
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void activate() {
+		super.activate();
+		// Set the initial selection at the last moment to ensure all 
+		// required loc:// PVs have started
+		setInitialSelection();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void doDeActivate() {
 		super.doDeActivate();
@@ -170,8 +169,6 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 	 */
 	@Override
 	protected void registerPropertyChangeHandlers() {
-		
-
 		autoSizeWidget((MuxMenuFigure) getFigure());
 
 		// Items
@@ -210,11 +207,17 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 		getWidgetModel().setSize(getWidgetModel().getWidth(), d.height);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getValue() {
 		return combo.getText();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setValue(Object value) {
 		if(value instanceof String)
