@@ -26,36 +26,68 @@ gridSize 8
 disableScroll
 endScreenProperties
 
+## (Menu Mux)
+#object menuMuxClass
+#beginObjectProperties
+#major 4
+#minor 1
+#release 0
+#x 100
+#y 24
+#w 72
+#h 24
+#fgColor index 14
+#bgColor index 4
+#topShadowColor index 1
+#botShadowColor index 11
+#font "arial-medium-r-12.0"
+#numItems 3
+#symbolTag {
+#  0 "volts"
+#  1 "dBm"
+#  2 "watts"
+#}
+#symbol0 {
+#  0 "d"
+#  1 "d"
+#  2 "d"
+#}
+#value0 {
+#  0 "DIODE:V"
+#  1 "DIODE:DBM"
+#  2 "DIODE:W"
+#}
+#endObjectProperties
+
+
 # (Menu Mux)
 object menuMuxClass
 beginObjectProperties
 major 4
 minor 1
 release 0
-x 100
-y 24
-w 72
-h 24
+x 308
+y 150
+w 58
+h 36
 fgColor index 14
-bgColor index 4
+bgColor index 3
 topShadowColor index 1
 botShadowColor index 11
-font "arial-medium-r-12.0"
-numItems 3
+font "arial-medium-r-16.0"
+#initialState "$(BL)"
+numItems 2
 symbolTag {
-  0 "volts"
-  1 "dBm"
-  2 "watts"
+  0 "NORMAL"
+  1 "BL"
 }
 symbol0 {
-  0 "d"
-  1 "e"
-  2 "f"
+  0 "CON"
+  1 "CON"
 }
 value0 {
-  0 "DIODE:V"
-  1 "DIODE:DBM"
-  2 "DIODE:W"
+  0 "CON"
+  1 "BLCON"
 }
 endObjectProperties
 
