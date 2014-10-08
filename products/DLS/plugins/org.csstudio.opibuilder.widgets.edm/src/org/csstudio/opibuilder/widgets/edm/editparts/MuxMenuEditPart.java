@@ -6,6 +6,7 @@ import org.csstudio.opibuilder.editparts.AbstractPVWidgetEditPart;
 import org.csstudio.opibuilder.editparts.ExecutionMode;
 import org.csstudio.opibuilder.model.AbstractWidgetModel;
 import org.csstudio.opibuilder.properties.IWidgetPropertyChangeHandler;
+import org.csstudio.opibuilder.util.BOYPVFactory;
 import org.csstudio.opibuilder.widgets.edm.figures.MuxMenuFigure;
 import org.csstudio.opibuilder.widgets.edm.model.MuxMenuModel;
 import org.csstudio.simplepv.IPV;
@@ -15,7 +16,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
-import org.csstudio.opibuilder.scriptUtil.PVUtil;
 
 /**The editpart of a muxMenu.
  *
@@ -29,6 +29,12 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 	private Combo combo;
 	private SelectionListener comboSelectionListener;
 
+	@Override
+	public void activate() {
+		super.activate();
+
+		setInitialSelection();
+	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,22 +75,19 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 
 		updateCombo(items);
 
-		String initialState = model.getInitialState();
-		if (initialState == null) {
-			System.err.println("NULL initialState");
-		}
-		else {
-			System.err.println("Got initialState: " + initialState);
-		}
-		setInitialSelection(initialState);
-
 		return comboFigure;
 	}
 
-	private void setInitialSelection(String initialState) {
+	private void setInitialSelection() {
 		if (combo.getItemCount() > 0) {
-			// Default selection is the first element
-			combo.select(0);
+			String initialState = getWidgetModel().getInitialState();
+			if (initialState == null) {
+				System.err.println("NULL initialState");
+			}
+			else {
+				System.err.println("Got initialState: " + initialState);
+			}
+
 			if (initialState != null && !initialState.isEmpty()) {
 				try {
 					int selectedIndex = Integer.parseInt(initialState);
@@ -94,6 +97,11 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 					System.err.println("Invalid initial state: " + initialState);
 				}
 			}
+			else
+			{
+				// Default selection is the first element
+				combo.select(0);
+			}
 			// force a selection change event to set the associated loc:// pv
 			comboSelectionListener.widgetSelected(null);
 		}
@@ -101,20 +109,31 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 
 	private class MuxMenuSelectionListener extends SelectionAdapter {
 		/// Selection change handler for the MenuMux Combobox
+		private static final int TIMEOUT = 10;  // put timeout (s)
+
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			/// On selected change put the selected PV name to the associated local pv (e.g. $d)
 			MuxMenuModel model = getWidgetModel();
 
 			int selectedIdx = combo.getSelectionIndex();
+			System.out.println("Change listener on " + selectedIdx);
 			List<String> targets = model.getTargets();
 			List<String> values = model.getValues();
 
 			if (selectedIdx < targets.size() && selectedIdx < values.size()) {
 				String macro_pv = "loc://" + targets.get(selectedIdx);
-				String target_pv = values.get(selectedIdx);
-				System.out.println("Setting " + macro_pv + " to " + target_pv);
-				PVUtil.writePV(macro_pv, target_pv);
+				String target = values.get(selectedIdx);
+				System.out.println("Setting " + macro_pv + " to " + target);
+				try {
+					IPV pv = BOYPVFactory.createPV(macro_pv);
+					if (!pv.setValue(target.toString(), TIMEOUT*1000)) {
+						throw new Exception("Write Failed!");
+					}
+				} catch (Exception ex) {
+					System.err.println("Error putting MuxMenu PV name" + ex.getMessage());
+					ex.printStackTrace();
+				}
 			}
 		}
 	}
