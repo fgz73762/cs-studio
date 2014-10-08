@@ -1,19 +1,13 @@
 package org.csstudio.opibuilder.converter.writer;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.csstudio.opibuilder.converter.model.EdmAttribute;
 import org.csstudio.opibuilder.converter.model.EdmColor;
 import org.csstudio.opibuilder.converter.model.EdmDisplay;
 import org.csstudio.opibuilder.converter.model.EdmEntity;
 import org.csstudio.opibuilder.converter.model.EdmException;
-import org.csstudio.opibuilder.converter.model.EdmFont;
 import org.csstudio.opibuilder.converter.model.EdmModel;
 import org.csstudio.opibuilder.converter.model.Edm_menuMuxClass;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import junit.framework.TestCase;
 
@@ -53,12 +47,12 @@ public class Opi_menuMuxClassTest extends TestCase {
 		generatedElement = (Element)doc.getElementsByTagName("widget").item(0);
 	}
 
-	public void testOpi_TextupdateClass_creates_ComboBox() throws EdmException {
+	public void testOpi_menuMuxClass_creates_MuxMenu() throws EdmException {
 		Opi_menuMuxClass o = new Opi_menuMuxClass(context, mux);
 		assertTrue(o instanceof OpiWidget);
 
 		Element e = (Element)doc.getElementsByTagName("widget").item(0);
-		assertEquals("org.csstudio.opibuilder.widgets.ComboBox", e.getAttribute("typeId"));
+		assertEquals("org.csstudio.opibuilder.widgets.edm.MuxMenu", e.getAttribute("typeId"));
 		assertEquals("1.0", e.getAttribute("version"));
 		XMLFileHandler.isElementEqual("EDM MenuMux", "name", e);
 	}
@@ -78,9 +72,9 @@ public class Opi_menuMuxClassTest extends TestCase {
 		XMLFileHandler.isFontElementEqual("arial-medium-r-12.0", "font", generatedElement);
 	}
 
-	public void test_sets_symbolTag_as_items() throws EdmException {
-
-		String[] expectedItems = new String[] {"volts", "dBm", "watts"};
-		XMLFileHandler.isListElementEqual(expectedItems, "items", generatedElement);
-	}
+//	public void test_sets_symbolTag_as_items() throws EdmException {
+//
+//		String[] expectedItems = new String[] {"volts", "dBm", "watts"};
+//		XMLFileHandler.isListElementEqual(expectedItems, "items", generatedElement);
+//	}
 }

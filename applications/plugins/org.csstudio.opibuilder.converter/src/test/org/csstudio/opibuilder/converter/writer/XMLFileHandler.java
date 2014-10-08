@@ -24,6 +24,7 @@ import org.csstudio.opibuilder.converter.model.EdmFont;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
@@ -161,5 +162,19 @@ public class XMLFileHandler extends TestCase {
 			node = node.getNextSibling();
 		}
 		return false;		
+	}
+
+	/** Returns true if element contains a list of child elements containing the
+	 *  given strings
+	 */
+	public static void isListElementEqual(String[] expectedItems, String tag, Element e)  throws EdmException {
+		Element subElement = (Element)e.getElementsByTagName(tag).item(0);
+
+		NodeList items = subElement.getElementsByTagName("s");
+
+		assertEquals(expectedItems.length, items.getLength());
+		for (int index=0; index < expectedItems.length; index++) {
+			assertEquals(expectedItems[index], items.item(index).getTextContent());
+		}
 	}
 }
