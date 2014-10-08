@@ -82,21 +82,21 @@ public final class MuxMenuEditPart extends AbstractPVWidgetEditPart {
 	}
 
 	private void setInitialSelection(String initialState) {
-
-		// Default selection is the first element
-		combo.select(0);
-		if (initialState != null && !initialState.isEmpty()) {
-
-			try {
-				int selectedIndex = Integer.parseInt(initialState);
-				combo.select(selectedIndex);
+		if (combo.getItemCount() > 0) {
+			// Default selection is the first element
+			combo.select(0);
+			if (initialState != null && !initialState.isEmpty()) {
+				try {
+					int selectedIndex = Integer.parseInt(initialState);
+					combo.select(selectedIndex);
+				}
+				catch (NumberFormatException ex) {
+					System.err.println("Invalid initial state: " + initialState);
+				}
 			}
-			catch (NumberFormatException ex) {
-				System.err.println("Invalid initial state: " + initialState);
-			}
+			// force a selection change event to set the associated loc:// pv
+			comboSelectionListener.widgetSelected(null);
 		}
-		// force a selection change event to set the associated loc:// pv
-		comboSelectionListener.widgetSelected(null);
 	}
 
 	private class MuxMenuSelectionListener extends SelectionAdapter {
