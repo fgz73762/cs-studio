@@ -46,9 +46,10 @@ public class Opi_activeLineClass extends OpiWidget {
 				if(r.isLineAlarm())
 					createColorAlarmRule(r, convertPVName(r.getAlarmPv()), "line_color",
 						"lineColorAlarmRule", false);
-				if(r.isFillAlarm())
-					createColorAlarmRule(r, convertPVName(r.getAlarmPv()), "background_color",
-						"backColorAlarmRule", false);
+				if(r.isFillAlarm()) {
+					new OpiString(widgetContext, "pv_name", convertPVName(r.getAlarmPv()));
+					new OpiBoolean(widgetContext, "backcolor_alarm_sensitive", true);
+				}
 			}
 			
 		} else{
@@ -68,9 +69,10 @@ public class Opi_activeLineClass extends OpiWidget {
 			
 			// If a string property is not exist, it is null.
 			if (r.getAlarmPv() != null) {
-				if(r.isLineAlarm())
-					createColorAlarmRule(r, convertPVName(r.getAlarmPv()), "background_color",
-						"backColorAlarmRule", false);
+				if(r.isLineAlarm()) {
+					new OpiString(widgetContext, "pv_name", convertPVName(r.getAlarmPv()));
+					new OpiBoolean(widgetContext, "backcolor_alarm_sensitive", true);
+				}
 			}
 		}
 		

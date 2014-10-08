@@ -40,13 +40,11 @@ public class Opi_activeArcClass extends OpiWidget {
 			
 			
 		if (r.getAlarmPv() != null) {
-			// line color alarm rule.
+			new OpiString(widgetContext, "pv_name", convertPVName(r.getAlarmPv()));
 			if (r.isLineAlarm())
-				createColorAlarmRule(r, convertPVName(r.getAlarmPv()), "foreground_color",
-						"lineColorAlarmRule", false);
+				new OpiBoolean(widgetContext, "forecolor_alarm_sensitive", true);
 			if (r.isFillAlarm())
-				createColorAlarmRule(r, convertPVName(r.getAlarmPv()), "background_color",
-						"backColorAlarmRule", false);
+				new OpiBoolean(widgetContext, "backcolor_alarm_sensitive", true);
 		}
 		
 		int line_width = 1;
