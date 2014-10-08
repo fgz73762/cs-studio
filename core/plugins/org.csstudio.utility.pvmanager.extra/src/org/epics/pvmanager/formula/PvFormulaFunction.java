@@ -86,7 +86,9 @@ class PvFormulaFunction extends DynamicFormulaFunction {
     @Override
     public void dispose() {
         // Disconnect everything on dispose
-        getDirector().disconnectExpression(currentExpression);
+        if (currentExpression != null) {
+            getDirector().disconnectExpression(currentExpression);
+        }
         currentExpression = null;
     }
     
